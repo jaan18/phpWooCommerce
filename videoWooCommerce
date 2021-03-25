@@ -1,0 +1,20 @@
+
+add_action( 'antes_single_product', 'ver_video_producto' );
+ 
+function ver_video_producto() {
+    // id del video va aqui
+    if ( is_single( '37128' ) ) {
+        remove_action( 'antes_single_product_summary', 'woocommerce_show_product_images', 20 );
+        add_action( 'antes_single_product_summary', 'ts_add_iframe_video', 30 );
+    }
+}
+ 
+function ts_add_iframe_video() {
+     
+    $output = '<div class="woocommerce-product-gallery images">';
+        // iframe del video va aqui
+    $output .= '<iframe width="560" height="315" src="https://www.youtube.com/embed/9feI5zx_Bh4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    $output .= '</div>';
+     
+    echo $output;
+}
