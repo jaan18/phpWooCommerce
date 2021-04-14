@@ -1,0 +1,5 @@
+add_filter( 'woocommerce_no_shipping_available_html', 'my_custom_no_shipping_message' );
+add_filter( 'woocommerce_cart_no_shipping_available_html', 'my_custom_no_shipping_message' );
+function my_custom_no_shipping_message( $message ) {
+	return __( 'Costo de envío no incluido. Favor de cotizar con asesor comercial para envío' );
+}
