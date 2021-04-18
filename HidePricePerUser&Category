@@ -1,0 +1,12 @@
+add_filter( 'woocommerce_get_price_html', function( $price, $product ) {
+	$current_user = wp_get_current_user();
+	$allowed_roles = array( 'customer'); // el rol a esconder 
+	// Categorias a esconder
+	$hide_for_categories = array( 'Software','Servicios','Producto Gasolina', 'Producto' );
+	// Si el rol de usuario esta en el array y tiene esta categoria -> esconde el agregar el carrito y el precio, devuelveme este mensaje
+	if (array_intersect( $current_user->roles, $allowed_roles ) && has_term( $hide_for_categories, 'product_cat', $product->get_id() ) ) {
+		add_filter( 'woocommerce_is_purchasable', '__return_false');
+		return '¿Necesitas cotizar o una presentación? Contácta a uno de nuestros asesores al Tel: +52 (33) 3793 9090 ext. 134 a 139.';
+	} 
+return $price; //Regresa al precio original
+}, 10, 2 ); 
