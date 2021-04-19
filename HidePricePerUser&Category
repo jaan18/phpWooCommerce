@@ -1,0 +1,14 @@
+
+// Filtros de precio por usuario y categoria
+add_filter( 'woocommerce_get_price_html', function( $price, $product ) {
+	$current_user = wp_get_current_user();
+	$allowed_roles = array( 'customer'); // el rol a esconder 
+	// Categorias a esconder
+	$hide_for_categories = array( 'categorias','categorias','categorias', 'categorias' );
+	// Si el rol de usuario esta en el array y tiene esta categoria -> esconde el agregar el carrito y el precio, devuelveme este mensaje
+	if (array_intersect( $current_user->roles, $allowed_roles ) && has_term( $hide_for_categories, 'product_cat', $product->get_id() ) ) {
+		add_filter( 'woocommerce_is_purchasable', '__return_false');
+		return 'INTRODUCE AQUI EL MENSAJE QUE DESEES MOSTRAR';
+	} 
+return $price; //Regresa al precio original
+}, 10, 2 ); 
